@@ -31,8 +31,6 @@ class MainActivity : AppCompatActivity() {
                     val point = postSnapshot.getValue(NewsItem::class.java)
                     point?.let { data.add(it) }
                 }
-
-                findViewById<TextView>(R.id.tvCount).text = data.size.toString()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -40,6 +38,5 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
     }
 }

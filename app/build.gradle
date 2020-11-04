@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -51,4 +52,7 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation "com.google.firebase:firebase-database-ktx:19.5.1"
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'androidx.browser:browser:1.2.0'
 }
