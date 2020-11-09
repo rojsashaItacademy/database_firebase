@@ -1,17 +1,21 @@
-package ru.trinitydigital.firebasebackend
+package ru.trinitydigital.firebasebackend.ui.auth
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_auth.*
+import ru.trinitydigital.firebasebackend.R
 import java.util.concurrent.TimeUnit
 
 class AuthActivity : AppCompatActivity() {
+
+    private val viewModel by viewModels<AuthViewModel>()
 
     private lateinit var auth: FirebaseAuth
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
