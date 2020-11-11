@@ -1,17 +1,24 @@
 package ru.trinitydigital.firebasebackend.ui.auth
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_auth.*
 import ru.trinitydigital.firebasebackend.R
+import ru.trinitydigital.firebasebackend.ui.main.MainActivity
 import java.util.concurrent.TimeUnit
+
 
 class AuthActivity : AppCompatActivity() {
 
@@ -36,11 +43,14 @@ class AuthActivity : AppCompatActivity() {
         }
 
         btnSentCode.setOnClickListener {
-            val credential = PhoneAuthProvider.getCredential(
-                storedVerificationId!!,
-                etInputCode.text.toString()
-            )
-            signInWithPhoneAuthCredential(credential)
+            storedVerificationId?.let { verificationId ->
+                val credential = PhoneAuthProvider.getCredential(
+                    verificationId,
+                    etInputCode.text.toString()
+                )
+
+                signInWithPhoneAuthCredential(credential)
+            }
         }
     }
 
@@ -52,6 +62,16 @@ class AuthActivity : AppCompatActivity() {
                     Log.d("adasdasdasd", "signInWithCredential:success")
 
                     val user = task.result?.user
+
+                    user?.getIdToken(true)?.addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            val idToken: String? = it.result?.token
+                            startActivity(Intent(this, MainActivity::class.java))
+                            // ...
+                        } else {
+                            // Handle error -> task.getException();
+                        }
+                    }
                     // ...
                 } else {
                     // Sign in failed, display a message and update the UI
@@ -87,7 +107,6 @@ class AuthActivity : AppCompatActivity() {
     private fun verifyPhone(phone: String) {
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phone)
-//            .setPhoneNumber("+79853682743")       // Phone number to verify
             .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
             .setActivity(this) // Activity (for callback binding)
             .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks

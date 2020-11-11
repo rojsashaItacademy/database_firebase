@@ -21,10 +21,9 @@ class FirebaseApiImpl : FirebaseApi {
         val database = Firebase.database
         val ref = database.getReferenceFromUrl("https://first-backend-firebase.firebaseio.com/")
 
-        val list: ArrayList<NewsItem>? = arrayListOf()
-
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                val list: ArrayList<NewsItem>? = arrayListOf()
                 for (postSnapshot in snapshot.children) {
                     val point = postSnapshot.getValue(NewsItem::class.java)
                     point?.let { list?.add(it) }

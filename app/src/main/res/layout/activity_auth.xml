@@ -13,7 +13,7 @@
         android:layout_margin="16dp"
         android:hint="Введите номер"
         android:inputType="phone"
-        android:text="+9999999999"
+        android:text="+79999999999"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,13 +23,14 @@
         android:id="@+id/btnSentPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Войти"
-        android:padding="16dp"
-        android:textColor="@color/white"
         android:background="@drawable/bg_button"
+        android:padding="16dp"
+        android:text="Войти"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etInputNumber"/>
+        app:layout_constraintTop_toBottomOf="@+id/etInputNumber" />
 
     <EditText
         android:id="@+id/etInputCode"
