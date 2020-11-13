@@ -2,7 +2,9 @@ package ru.trinitydigital.firebasebackend.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,12 +19,15 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_auth.*
 import ru.trinitydigital.firebasebackend.R
 import ru.trinitydigital.firebasebackend.ui.main.MainActivity
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
 class AuthActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<AuthViewModel>()
+
 
     private lateinit var auth: FirebaseAuth
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
@@ -37,9 +42,38 @@ class AuthActivity : AppCompatActivity() {
         setupListeners()
     }
 
+    private fun startTimer() {
+        btnSentPhone.isEnabled = false
+
+        val timer = object : CountDownTimer(60_000, 1_000) {
+            override fun onTick(millisUntilFinished: Long) {
+//
+//                dateFormat(millisUntilFinished)
+                val seconds = (millisUntilFinished / 1000).toInt()
+                tvTimer.text = dateFormat(millisUntilFinished)
+                tvTimer.visibility = View.VISIBLE
+            }
+
+            override fun onFinish() {
+                btnSentPhone.isEnabled = true
+                tvTimer.visibility = View.GONE
+            }
+        }
+        timer.start()
+    }
+
+    fun dateFormat(millisUntilFinished: Long): String {
+        val format = SimpleDateFormat("mm:ss", Locale.getDefault())
+        val date = Date(millisUntilFinished)
+
+        return format.format(date)
+
+    }
+
     private fun setupListeners() {
         btnSentPhone.setOnClickListener {
             verifyPhone(etInputNumber.text.toString())
+            startTimer()
         }
 
         btnSentCode.setOnClickListener {

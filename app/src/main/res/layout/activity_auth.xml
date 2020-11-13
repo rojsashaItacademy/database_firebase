@@ -32,14 +32,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etInputNumber" />
 
+    <TextView
+        android:id="@+id/tvTimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="adasdasdasdasd"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/etInputCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:hint="Введите код"
-        android:text="000000"
         android:inputType="number"
+        android:text="000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSentPhone" />
@@ -48,14 +59,13 @@
         android:id="@+id/btnSentCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Отправить смс код"
-        android:padding="16dp"
-        android:textColor="@color/white"
         android:background="@drawable/bg_button"
+        android:padding="16dp"
+        android:text="Отправить смс код"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etInputCode"/>
-
+        app:layout_constraintTop_toBottomOf="@+id/etInputCode" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
